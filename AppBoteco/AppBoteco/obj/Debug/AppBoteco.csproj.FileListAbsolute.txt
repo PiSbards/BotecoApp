@@ -1,0 +1,43 @@
+C:\Programas\AppBoteco\AppBoteco\bin\Debug\AppBoteco.exe.config
+C:\Programas\AppBoteco\AppBoteco\bin\Debug\AppBoteco.exe
+C:\Programas\AppBoteco\AppBoteco\bin\Debug\AppBoteco.pdb
+C:\Programas\AppBoteco\AppBoteco\obj\Debug\AppBoteco.csproj.AssemblyReference.cache
+C:\Programas\AppBoteco\AppBoteco\obj\Debug\AppBoteco.csproj.SuggestedBindingRedirects.cache
+C:\Programas\AppBoteco\AppBoteco\obj\Debug\AppBoteco.FrmSplash.resources
+C:\Programas\AppBoteco\AppBoteco\obj\Debug\AppBoteco.Properties.Resources.resources
+C:\Programas\AppBoteco\AppBoteco\obj\Debug\AppBoteco.csproj.GenerateResource.cache
+C:\Programas\AppBoteco\AppBoteco\obj\Debug\AppBoteco.csproj.CoreCompileInputs.cache
+C:\Programas\AppBoteco\AppBoteco\obj\Debug\AppBoteco.exe
+C:\Programas\AppBoteco\AppBoteco\obj\Debug\AppBoteco.pdb
+C:\Programas\AppBoteco\AppBoteco\obj\Debug\AppBoteco.FrmPrincipal.resources
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\bin\Debug\DbBoteco.mdf
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\bin\Debug\DbBoteco_log.ldf
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\bin\Debug\AppBoteco.exe.config
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\bin\Debug\AppBoteco.exe
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\bin\Debug\AppBoteco.pdb
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\obj\Debug\AppBoteco.csproj.AssemblyReference.cache
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\obj\Debug\AppBoteco.csproj.SuggestedBindingRedirects.cache
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\obj\Debug\AppBoteco.FrmPrincipal.resources
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\obj\Debug\AppBoteco.FrmSplash.resources
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\obj\Debug\AppBoteco.Properties.Resources.resources
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\obj\Debug\AppBoteco.csproj.GenerateResource.cache
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\obj\Debug\AppBoteco.csproj.CoreCompileInputs.cache
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\obj\Debug\AppBoteco.exe
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\obj\Debug\AppBoteco.pdb
+C:\Users\Aluno\Desktop\AppBoteco\AppBoteco\obj\Debug\AppBoteco.FrmCliente.resources
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\bin\Debug\DbBoteco.mdf
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\bin\Debug\DbBoteco_log.ldf
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\bin\Debug\AppBoteco.exe.config
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\bin\Debug\AppBoteco.exe
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\bin\Debug\AppBoteco.pdb
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.csproj.AssemblyReference.cache
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.csproj.SuggestedBindingRedirects.cache
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.FrmCliente.resources
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.FrmFuncionario.resources
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.FrmPrincipal.resources
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.FrmSplash.resources
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.Properties.Resources.resources
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.csproj.GenerateResource.cache
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.csproj.CoreCompileInputs.cache
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.exe
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.pdb
