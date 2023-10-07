@@ -41,3 +41,4 @@ E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.csp
 E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.csproj.CoreCompileInputs.cache
 E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.exe
 E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.pdb
+E:\TDS\2° Periodo\PA - Prof.Emerson\AppBoteco\AppBoteco\obj\Debug\AppBoteco.FrmProduto.resources

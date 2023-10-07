@@ -28,8 +28,8 @@ namespace AppBoteco
         private void FrmFuncionario_Load(object sender, EventArgs e)
         {
             Funcionario funcionario = new Funcionario();
-            List<Funcionario> clientes = funcionario.listacliente();
-            dgvFuncionario.DataSource = clientes;
+            List<Funcionario> func = funcionario.listacliente();
+            dgvFuncionario.DataSource = func;
             btnEditar.Enabled = false;
             btnExcluir.Enabled = false;
             this.ActiveControl = txtNome;
@@ -37,7 +37,7 @@ namespace AppBoteco
 
         private void btnInserir_Click(object sender, EventArgs e)
         {
-            if (txtNome.Text == "" || mtxtCpf.Text == "" || mtxtCelular.Text == "")
+            if (txtNome.Text == "" || mtxtCpf.Text == "" || mtxtCelular.Text == "" || txtEndereco.Text == "" || txtBairro.Text == "" || txtCidade.Text == "" || mtxtCep.Text == ""|| cbxCargo.Text == "")
             {
                 MessageBox.Show("Por Favor, preencha todos os campos!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -48,31 +48,33 @@ namespace AppBoteco
                 if (funcionario.RegistroRepetido(mtxtCpf.Text) == true)
                 {
                     MessageBox.Show("Funcionário já cadastrado!", "Funcionário Repetido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtNome.Text = "";
-                    mtxtCpf.Text = "";
-                    mtxtCelular.Text = "";
-                    mtxtCep.Text = "";
-                    txtBairro.Text = "";
-                    txtCidade.Text = "";
-                    txtEndereco.Text = "";
-                    cbxCargo.SelectedIndex = 0;
-                    return;
+					txtNome.Text = "";
+					mtxtCpf.Text = "";
+					mtxtCelular.Text = "";
+					mtxtCep.Text = "";
+					txtBairro.Text = "";
+					txtCidade.Text = "";
+					txtEndereco.Text = "";
+					txtComplemento.Text = "";
+					cbxCargo.SelectedIndex = 0;
+					return;
                 }
                 else
                 {
-                    funcionario.Inserir(txtNome.Text, mtxtCpf.Text,txtEndereco.Text, string bairro, string cidade, mtxtCelular.Text, string cep, string cargo);
+                    funcionario.Inserir(txtNome.Text, mtxtCpf.Text,txtEndereco.Text,txtComplemento.Text,txtBairro.Text, txtCidade.Text, mtxtCelular.Text, mtxtCep.Text, cbxCargo.Text);
                     MessageBox.Show("Funcionário inserido com sucesso!", "Inserção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    List<Funcionario> funcionarios = funcionario.listacliente();
-                    dgvFuncionario.DataSource = funcionarios;
-                    txtNome.Text = "";
-                    mtxtCpf.Text = "";
-                    mtxtCelular.Text = "";
-                    mtxtCep.Text = "";
-                    txtBairro.Text = "";
-                    txtCidade.Text = "";
-                    txtEndereco.Text = "";
-                    cbxCargo.SelectedIndex = 0;
-                    this.txtNome.Focus();
+                    List<Funcionario> func = funcionario.listacliente();
+                    dgvFuncionario.DataSource = func;
+					txtNome.Text = "";
+					mtxtCpf.Text = "";
+					mtxtCelular.Text = "";
+					mtxtCep.Text = "";
+					txtBairro.Text = "";
+					txtCidade.Text = "";
+					txtEndereco.Text = "";
+					txtComplemento.Text = "";
+					cbxCargo.SelectedIndex = 0;
+					this.txtNome.Focus();
                 }
             }
             catch (Exception er)
@@ -100,6 +102,7 @@ namespace AppBoteco
                 txtBairro.Text = func.bairro;
                 txtCidade.Text = func.cidade;
                 txtEndereco.Text = func.endereco;
+                txtComplemento.Text = func.complemento;
                 cbxCargo.Text = func.cargo;
 
                 if (txtNome.Text != null)
@@ -113,5 +116,102 @@ namespace AppBoteco
                 MessageBox.Show(er.Message, "Erro - Inserção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-    }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int Id = Convert.ToInt32(txtId.Text.Trim());
+                Funcionario funcionario = new Funcionario();
+                funcionario.Atualizar(Id,txtNome.Text,mtxtCpf.Text,txtEndereco.Text,txtComplemento.Text,txtBairro.Text,txtCidade.Text,mtxtCelular.Text,mtxtCep.Text,cbxCargo.Text);
+                MessageBox.Show("Funcionário atualizado com sucesso!!", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                List<Funcionario> func = funcionario.listacliente();
+                dgvFuncionario.DataSource = func;
+				txtNome.Text = "";
+				mtxtCpf.Text = "";
+				mtxtCelular.Text = "";
+				mtxtCep.Text = "";
+				txtBairro.Text = "";
+				txtCidade.Text = "";
+				txtEndereco.Text = "";
+				txtComplemento.Text = "";
+				cbxCargo.SelectedIndex = 0;
+				this.ActiveControl = txtNome;
+            }
+            catch (Exception er)
+            {
+                MessageBox.Show(er.Message, "Erro - Edição", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int Id = Convert.ToInt32(txtId.Text.Trim());
+                Funcionario funcionario = new Funcionario();
+                funcionario.Excluir(Id);
+                MessageBox.Show("Funcionário excluído com sucesso!", "Exclusão", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                List<Funcionario> func = funcionario.listacliente();
+                dgvFuncionario.DataSource = func;
+                txtNome.Text = "";
+                mtxtCpf.Text = "";
+                mtxtCelular.Text = "";
+                mtxtCep.Text = "";
+                txtBairro.Text = "";
+                txtCidade.Text = "";
+                txtEndereco.Text = "";
+                txtComplemento.Text = "";
+                cbxCargo.SelectedIndex = 0;
+                this.ActiveControl = txtNome;
+            }
+            catch (Exception er)
+            {
+                MessageBox.Show(er.Message, "Erro - Inserção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvFuncionario_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                
+                DataGridViewRow row = this.dgvFuncionario.Rows[e.RowIndex];
+                this.dgvFuncionario.Rows[e.RowIndex].Selected = true;
+                txtId.Text = row.Cells[0].Value.ToString();
+                txtNome.Text = row.Cells[1].Value.ToString();
+
+                mtxtCpf.Text = row.Cells[3].Value.ToString();
+
+                txtEndereco.Text = row.Cells[4].Value.ToString();
+
+                txtComplemento.Text = row.Cells[5].Value.ToString();
+
+                txtBairro.Text = row.Cells[6].Value.ToString();
+
+                txtCidade.Text = row.Cells[7].Value.ToString();
+
+                mtxtCelular.Text = row.Cells[2].Value.ToString();
+
+                mtxtCep.Text = row.Cells[8].Value.ToString();  
+                
+                cbxCargo.Text = row.Cells[9].Value.ToString();
+                
+            }
+            btnEditar.Enabled = true;
+            btnExcluir.Enabled = true;
+        }
+
+		private void btnBuscaCep_Click(object sender, EventArgs e)
+		{
+            BuscaCEP cEP = new BuscaCEP();
+            cEP.buscaCep(mtxtCep.Text);
+			txtBairro.Text = cEP.bairro;
+			txtCidade.Text = cEP.cidade;
+			txtEndereco.Text = cEP.endereco;
+			txtComplemento.Text = cEP.complemento;
+
+		}
+	}
 }

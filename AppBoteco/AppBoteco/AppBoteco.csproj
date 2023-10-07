@@ -61,8 +61,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\BuscaCep.cs" />
     <Compile Include="Classes\Cliente.cs" />
     <Compile Include="Classes\Funcionario.cs" />
+    <Compile Include="Classes\Produto.cs" />
     <Compile Include="FrmCliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmProduto.resx">
+      <DependentUpon>FrmProduto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmSplash.resx">
       <DependentUpon>FrmSplash.cs</DependentUpon>
@@ -159,6 +164,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>DbBoteco.mdf</DependentUpon>
     </Content>
+    <None Include="Resources\cep.jpg" />
     <None Include="Resources\busca.png" />
   </ItemGroup>
   <ItemGroup>
