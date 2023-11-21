@@ -37,7 +37,7 @@ namespace AppBoteco
         {
             if (txtNome.Text == "" || mtxtCpf.Text == "" || mtxtCelular.Text == "")
             {
-                MessageBox.Show("Por Favor, preencha todos os campos!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, preencha todos os campos!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             try
@@ -45,7 +45,7 @@ namespace AppBoteco
                 Cliente cliente = new Cliente();
                 if (cliente.RegistroRepetido(mtxtCpf.Text) == true)
                 {
-                    MessageBox.Show("Cliente já cadastrado!", "Cliente Repetido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Cliente já existe em nossa base de dados!", "Cliente Repetido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtNome.Text = "";
                     mtxtCpf.Text = "";
                     mtxtCelular.Text = "";
@@ -53,7 +53,7 @@ namespace AppBoteco
                 }
                 else
                 {
-                    cliente.Inserir(txtNome.Text,mtxtCpf.Text,mtxtCelular.Text);
+                    cliente.Inserir(txtNome.Text, mtxtCpf.Text, mtxtCelular.Text);
                     MessageBox.Show("Cliente inserido com sucesso!", "Inserção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     List<Cliente> clientes = cliente.listacliente();
                     dgvCliente.DataSource = clientes;
@@ -73,7 +73,7 @@ namespace AppBoteco
         {
             if (txtId.Text == "")
             {
-                MessageBox.Show("Por favor, digite um ID para localizar!", "Falta de informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Por favor, digite um ID para localizar!", "Sem ID", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             try
@@ -82,8 +82,8 @@ namespace AppBoteco
                 Cliente cliente = new Cliente();
                 cliente.Localizar(Id);
                 txtNome.Text = cliente.nome;
-                mtxtCelular.Text= cliente.celular;
-                mtxtCpf.Text= cliente.cpf;
+                mtxtCelular.Text = cliente.celular;
+                mtxtCpf.Text = cliente.cpf;
                 if (txtNome.Text != null)
                 {
                     btnEditar.Enabled = true;
@@ -92,7 +92,7 @@ namespace AppBoteco
             }
             catch (Exception er)
             {
-                MessageBox.Show(er.Message, "Erro - Inserção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(er.Message, "Erro - Localização", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -102,19 +102,19 @@ namespace AppBoteco
             {
                 int Id = Convert.ToInt32(txtId.Text.Trim());
                 Cliente cliente = new Cliente();
-                cliente.Atualizar(Id,txtNome.Text,mtxtCpf.Text,mtxtCelular.Text);
-                MessageBox.Show("Cliente atualizado com sucesso!!", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cliente.Atualizar(Id, txtNome.Text, mtxtCpf.Text, mtxtCelular.Text);
+                MessageBox.Show("Cliente atualizado com sucesso!", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 List<Cliente> clientes = cliente.listacliente();
                 dgvCliente.DataSource = clientes;
                 txtId.Text = "";
                 txtNome.Text = "";
-                mtxtCpf.Text = "";
                 mtxtCelular.Text = "";
+                mtxtCpf.Text = "";
                 this.ActiveControl = txtNome;
             }
             catch (Exception er)
             {
-                MessageBox.Show(er.Message, "Erro - Inserção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(er.Message, "Erro - Edição", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -125,24 +125,24 @@ namespace AppBoteco
                 int Id = Convert.ToInt32(txtId.Text.Trim());
                 Cliente cliente = new Cliente();
                 cliente.Excluir(Id);
-                MessageBox.Show("Cliente excluído com sucesso!","Exclusão",MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Cliente excluído com sucesso!", "Exclusão", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 List<Cliente> clientes = cliente.listacliente();
                 dgvCliente.DataSource = clientes;
                 txtId.Text = "";
                 txtNome.Text = "";
-                mtxtCpf.Text = "";
                 mtxtCelular.Text = "";
+                mtxtCpf.Text = "";
                 this.ActiveControl = txtNome;
             }
             catch (Exception er)
             {
-                MessageBox.Show(er.Message, "Erro - Inserção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(er.Message, "Erro - Exclusão", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void dgvCliente_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >=0)
+            if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = this.dgvCliente.Rows[e.RowIndex];
                 this.dgvCliente.Rows[e.RowIndex].Selected = true;

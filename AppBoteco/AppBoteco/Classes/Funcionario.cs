@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace AppBoteco.Classes
 {
@@ -12,18 +12,18 @@ namespace AppBoteco.Classes
     {
         public int Id { get; set; }
         public string nome { get; set; }
-        public string celular { get; set; }
         public string cpf { get; set; }
         public string endereco { get; set; }
         public string bairro { get; set; }
         public string cidade { get; set; }
+        public string celular { get; set; }
         public string cep { get; set; }
         public string cargo { get; set; }
         public string complemento { get; set; }
 
         SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"E:\\TDS\\2° Periodo\\PA - Prof.Emerson\\AppBoteco\\AppBoteco\\DbBoteco.mdf\";Integrated Security=True");
 
-        public List<Funcionario> listacliente()
+        public List<Funcionario> listafuncionario()
         {
             List<Funcionario> li = new List<Funcionario>();
             string sql = "SELECT * FROM Funcionario";
@@ -36,33 +36,32 @@ namespace AppBoteco.Classes
                 f.Id = (int)dr["Id"];
                 f.nome = dr["nome"].ToString();
                 f.cpf = dr["cpf"].ToString();
-                f.celular = dr["celular"].ToString();
                 f.endereco = dr["endereco"].ToString();
-                f.complemento = dr["complemento"].ToString();
                 f.bairro = dr["bairro"].ToString();
                 f.cidade = dr["cidade"].ToString();
+                f.celular = dr["celular"].ToString();
                 f.cep = dr["cep"].ToString();
                 f.cargo = dr["cargo"].ToString();
+                f.complemento = dr["complemento"].ToString();
                 li.Add(f);
-                
             }
             dr.Close();
             con.Close();
             return li;
         }
 
-        public void Inserir(string nome, string cpf, string endereco,string complemento, string bairro, string cidade,string celular,string cep,string cargo)
+        public void Inserir(string nome, string cpf, string endereco, string bairro, string cidade, string celular, string cep, string cargo, string complemento)
         {
-            string sql = "INSERT INTO Funcionario(nome,cpf,endereco,complemento,bairro,cidade,celular,cep,cargo) VALUES ('" + nome + "', '" + cpf + "', '" + endereco + "','"+complemento+"','"+bairro+"','"+cidade+"','"+celular+"','"+cep+"','"+cargo+"')";
+            string sql = "INSERT INTO Funcionario(nome,cpf,endereco,bairro,cidade,celular,cep,cargo,complemento) VALUES ('" + nome + "','" + cpf + "','"+endereco+"','"+bairro+"','"+cidade+"','"+celular+"','"+cep+"','"+cargo+"','"+complemento+"')";
             con.Open();
             SqlCommand cmd = new SqlCommand(sql, con);
             cmd.ExecuteNonQuery();
             con.Close();
         }
 
-        public void Atualizar(int Id, string nome, string cpf, string endereco,string complemento, string bairro, string cidade, string celular, string cep, string cargo)
+        public void Atualizar(int Id, string nome, string cpf, string endereco, string bairro, string cidade, string celular, string cep, string cargo, string complemento)
         {
-            string sql = "UPDATE Funcionario SET nome='" + nome + "',cpf='" + cpf + "',endereco='"+endereco+"',complemento='"+complemento+"',bairro='"+bairro+"',cidade='"+cidade+"',celular='" + celular + "',cep='"+cep+"',cargo='"+cargo+"' WHERE Id='" + Id + "'";
+            string sql = "UPDATE Funcionario SET nome='" + nome + "',cpf='" + cpf + "',endereco='"+endereco+"',bairro='"+bairro+"',cidade='"+cidade+"',celular='"+celular+"',cep='"+cep+"',cargo='"+cargo+"',complemento='"+complemento+"' WHERE Id='" + Id + "'";
             con.Open();
             SqlCommand cmd = new SqlCommand(sql, con);
             cmd.ExecuteNonQuery();
@@ -88,20 +87,21 @@ namespace AppBoteco.Classes
             {
                 nome = dr["nome"].ToString();
                 cpf = dr["cpf"].ToString();
-                celular = dr["celular"].ToString();
                 endereco = dr["endereco"].ToString();
-                complemento = dr["complemento"].ToString();
                 bairro = dr["bairro"].ToString();
                 cidade = dr["cidade"].ToString();
+                celular = dr["celular"].ToString();
                 cep = dr["cep"].ToString();
                 cargo = dr["cargo"].ToString();
+                complemento = dr["complemento"].ToString();
             }
             dr.Close();
             con.Close();
         }
-        public bool RegistroRepetido(string cpf)
+
+        public bool RegistroRepetido(string nome, string cpf)
         {
-            string sql = "SELECT * FROM Funcionario WHERE cpf='" + cpf + "'";
+            string sql = "SELECT * FROM Funcionario WHERE nome='" + nome + "' AND cpf='"+cpf+"'";
             con.Open();
             SqlCommand cmd = new SqlCommand(sql, con);
             cmd.ExecuteNonQuery();
@@ -113,6 +113,5 @@ namespace AppBoteco.Classes
             con.Close();
             return false;
         }
-
     }
 }

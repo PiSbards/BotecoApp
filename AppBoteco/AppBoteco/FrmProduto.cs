@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -18,46 +19,113 @@ namespace AppBoteco
             InitializeComponent();
         }
 
-        private void btnSair_Click(object sender, EventArgs e)
+        public void CarregaCbxTipo()
         {
-            this.Close();
+            SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"E:\\TDS\\2° Periodo\\PA - Prof.Emerson\\AppBoteco\\AppBoteco\\DbBoteco.mdf\";Integrated Security=True");
+            string sql = "SELECT * FROM Tipo";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            con.Open();
+            cmd.CommandType = CommandType.Text;
+            SqlDataAdapter da = new SqlDataAdapter(sql, con);
+            DataSet ds = new DataSet();
+            da.Fill(ds, "Tipo");
+            cbxTipo.ValueMember = "tipo";
+            cbxTipo.DisplayMember = "tipo";
+            cbxTipo.DataSource = ds.Tables["Tipo"];
+            con.Close();
         }
 
         private void FrmProduto_Load(object sender, EventArgs e)
         {
+            CarregaCbxTipo();
             Produto produto = new Produto();
-            List<Produto> pro = produto.listacliente();
-            dgvProduto.DataSource = pro;
-            cbxTipo.SelectedIndex = 0;
-			btnEditar.Enabled = false;
+            List<Produto> produtos = produto.listaproduto();
+            dgvProduto.DataSource = produtos;
+            btnEditar.Enabled = false;
             btnExcluir.Enabled = false;
-            this.ActiveControl = txtNome;
+        }
+
+        private void btnFechar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void btnInserir_Click(object sender, EventArgs e)
         {
-            if (txtNome.Text == "" || cbxTipo.Text == "" || txtQuantidade.Text == "" || txtPreco.Text == "")
-            {
-                MessageBox.Show("Por Favor, preencha todos os campos!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
             try
             {
-                int quantidade = Convert.ToInt32(txtQuantidade.Text);
-                Produto produto = new Produto();
-                produto.Inserir(txtNome.Text, cbxTipo.Text, quantidade, txtPreco.Text);
-                MessageBox.Show("Produto inserido com sucesso!", "Inserção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                List<Produto> pro = produto.listacliente();
-                dgvProduto.DataSource = pro;
-                txtNome.Text = "";
-				cbxTipo.SelectedIndex = 0;
-				txtQuantidade.Text = "";
-                txtPreco.Text = "";
-                this.txtNome.Focus();
+                if (txtNome.Text == "" && txtPreco.Text == "" && txtQuantidade.Text == "")
+                {
+                    MessageBox.Show("Por favor, preencha todos os campos!", "Campos obrigatórios", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                else
+                {
+                    Produto produto = new Produto();
+                    if (produto.RegistroRepetido(txtNome.Text, cbxTipo.Text) == true)
+                    {
+                        MessageBox.Show("Produto já existe em nossa base de dados!", "Repetido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        txtNome.Text = "";
+                        txtPreco.Text = "";
+                        txtQuantidade.Text = "";
+                        cbxTipo.Text = "";
+                        this.ActiveControl = txtNome;
+                    }
+                    else
+                    {
+                        int qtde = Convert.ToInt32(txtQuantidade.Text.Trim());
+                        if (qtde == 0)
+                        {
+                            MessageBox.Show("A quantidade não pode ser igual a zero.", "Quantidade", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            this.ActiveControl = txtQuantidade;
+                            return;
+                        }
+                        else
+                        {
+                            produto.Inserir(txtNome.Text, cbxTipo.Text, qtde, txtPreco.Text);
+                            MessageBox.Show("Produto inserido com sucesso!", "Inserção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            txtNome.Text = "";
+                            txtQuantidade.Text = "";
+                            txtPreco.Text = "";
+                            cbxTipo.Text = "";
+                            this.ActiveControl = txtNome;
+                            List<Produto> produtos = produto.listaproduto();
+                            dgvProduto.DataSource = produtos;
+                        }
+                    }
+                }
             }
             catch (Exception er)
             {
                 MessageBox.Show(er.Message, "Erro - Inserção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnLocalizar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtId.Text.Trim() == "")
+                {
+                    MessageBox.Show("Por favor digite o ID para localizar o produto!", "Localizar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else
+                {
+                    Produto produto = new Produto();
+                    int Id = Convert.ToInt32(txtId.Text.Trim());
+                    produto.Localizar(Id);
+                    txtNome.Text = produto.nome;
+                    cbxTipo.Text = produto.tipo;
+                    txtQuantidade.Text = Convert.ToString(produto.quantidade);
+                    txtPreco.Text = Convert.ToString(produto.preco);
+                    btnEditar.Enabled = true;
+                    btnExcluir.Enabled = true;
+                }
+            }
+            catch (Exception er)
+            {
+                MessageBox.Show(er.Message, "Erro - Localização", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -66,17 +134,20 @@ namespace AppBoteco
             try
             {
                 int Id = Convert.ToInt32(txtId.Text.Trim());
-                int quantidade = Convert.ToInt32(txtQuantidade.Text.Trim());
-                Produto pro = new Produto();
-                pro.Atualizar(Id, txtNome.Text, cbxTipo.Text, quantidade, txtPreco.Text);
-                MessageBox.Show("Produto atualizado com sucesso!!", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                List<Produto> produto = pro.listacliente();
-                dgvProduto.DataSource = produto;
+                int qtde = Convert.ToInt32(txtQuantidade.Text);
+                Produto produto = new Produto();
+                produto.Atualizar(Id, txtNome.Text, cbxTipo.Text, qtde, txtPreco.Text);
+                MessageBox.Show("Produto atualizado com sucesso!", "Edição", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                List<Produto> produtos = produto.listaproduto();
+                dgvProduto.DataSource = produtos;
+                txtId.Text = "";
                 txtNome.Text = "";
-				cbxTipo.SelectedIndex = 0;
-				txtQuantidade.Text = "";
+                cbxTipo.Text = "";
+                txtQuantidade.Text = "";
                 txtPreco.Text = "";
                 this.ActiveControl = txtNome;
+                btnEditar.Enabled = false;
+                btnExcluir.Enabled = false;
             }
             catch (Exception er)
             {
@@ -84,71 +155,29 @@ namespace AppBoteco
             }
         }
 
-        private void btnPesquisar_Click(object sender, EventArgs e)
+        private void btnExcluir_Click(object sender, EventArgs e)
         {
-            if (txtId.Text == "")
-            {
-                MessageBox.Show("Por favor, digite um ID para localizar!", "Falta de informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
             try
             {
                 int Id = Convert.ToInt32(txtId.Text.Trim());
-                Produto pro = new Produto();
-                pro.Localizar(Id);
-                txtNome.Text = pro.nome;
-                cbxTipo.Text = pro.tipo;
-                txtQuantidade.Text = pro.quantidade.ToString();
-                txtPreco.Text = pro.preco.ToString();
-
-                if (txtNome.Text != null)
-                {
-                    btnEditar.Enabled = true;
-                    btnExcluir.Enabled = true;
-                }
+                Produto produto = new Produto();
+                produto.Excluir(Id);
+                MessageBox.Show("Produto excluído com sucesso!", "Exclusão", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                List<Produto> produtos = produto.listaproduto();
+                dgvProduto.DataSource = produtos;
+                txtId.Text = "";
+                txtNome.Text = "";
+                cbxTipo.Text = "";
+                txtQuantidade.Text = "";
+                txtPreco.Text = "";
+                this.ActiveControl = txtNome;
+                btnEditar.Enabled = false;
+                btnExcluir.Enabled = false;
             }
-			catch (Exception er)
-			{
-				MessageBox.Show(er.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
-
-		private void btnExcluir_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				int Id = Convert.ToInt32(txtId.Text.Trim());
-				Produto produtos = new Produto();
-				produtos.Excluir(Id);
-				MessageBox.Show("Produto excluído com sucesso!", "Exclusão", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				List<Produto> pro = produtos.listacliente();
-				dgvProduto.DataSource = pro;
-				txtNome.Text = "";
-				cbxTipo.SelectedIndex = 0;
-				txtQuantidade.Text = "";
-				txtPreco.Text = "";
-				this.ActiveControl = txtNome;
-			}
-			catch (Exception er)
-			{
-				MessageBox.Show(er.Message, "Erro - Inserção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
-
-		private void dgvProduto_CellClick(object sender, DataGridViewCellEventArgs e)
-		{
-			if (e.RowIndex >= 0)
-			{
-				DataGridViewRow row = this.dgvProduto.Rows[e.RowIndex];
-				this.dgvProduto.Rows[e.RowIndex].Selected = true;
-				txtId.Text = row.Cells[0].Value.ToString();
-				txtNome.Text = row.Cells[1].Value.ToString();
-				cbxTipo.Text = row.Cells[2].Value.ToString();
-                txtQuantidade.Text = row.Cells[3].Value.ToString();
-				txtPreco.Text = row.Cells[4].Value.ToString();
-			}
-			btnEditar.Enabled = true;
-			btnExcluir.Enabled = true;
-		}
-	} 
+            catch (Exception er)
+            {
+                MessageBox.Show(er.Message, "Erro - Exclusão", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
 }

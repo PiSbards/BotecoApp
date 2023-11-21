@@ -76,5 +76,29 @@ namespace AppBoteco
             FrmCliente cliente = new FrmCliente();
             cliente.Show();
         }
+
+        private void pbxTipoProduto_Click(object sender, EventArgs e)
+        {
+            FrmTipoProduto tipoProduto = new FrmTipoProduto();
+            tipoProduto.Show();
+        }
+
+        private void tipoDoProdutoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmTipoProduto tipoProduto = new FrmTipoProduto();
+            tipoProduto.Show();
+        }
+
+        private void vendaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmVenda venda = new FrmVenda();
+            venda.Show();
+        }
+
+        private void pbxVendas_Click(object sender, EventArgs e)
+        {
+            FrmVenda venda = new FrmVenda();
+            venda.Show();
+        }
     }
 }

@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace AppBoteco.Classes
 {
-    internal class Produto
+    class Produto
     {
         public int Id { get; set; }
         public string nome { get; set; }
@@ -20,7 +18,7 @@ namespace AppBoteco.Classes
 
         SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"E:\\TDS\\2° Periodo\\PA - Prof.Emerson\\AppBoteco\\AppBoteco\\DbBoteco.mdf\";Integrated Security=True");
 
-        public List<Produto> listacliente()
+        public List<Produto> listaproduto()
         {
             List<Produto> li = new List<Produto>();
             string sql = "SELECT * FROM Produto";
@@ -34,9 +32,8 @@ namespace AppBoteco.Classes
                 p.nome = dr["nome"].ToString();
                 p.tipo = dr["tipo"].ToString();
                 p.quantidade = (int)dr["quantidade"];
-                p.preco = (decimal)dr["preco"];                
+                p.preco = (decimal)dr["preco"];
                 li.Add(p);
-
             }
             dr.Close();
             con.Close();
@@ -46,7 +43,7 @@ namespace AppBoteco.Classes
         public void Inserir(string nome, string tipo, int quantidade, string preco)
         {
             decimal final = Convert.ToDecimal(preco) / 100;
-            string sql = "INSERT INTO Produto (nome,tipo,quantidade,preco) VALUES ('" + nome + "', '"+tipo+"','"+quantidade+"',@preco)";
+            string sql = "INSERT INTO Produto(nome,tipo,quantidade,preco) VALUES ('" + nome + "','" + tipo + "','" + quantidade + "',@preco)";
             con.Open();
             SqlCommand cmd = new SqlCommand(sql, con);
             cmd.Parameters.Add("@preco", SqlDbType.Decimal).Value = final;
@@ -57,10 +54,10 @@ namespace AppBoteco.Classes
         public void Atualizar(int Id, string nome, string tipo, int quantidade, string preco)
         {
             decimal final = Convert.ToDecimal(preco) / 100;
-            string sql = "UPDATE Produto SET nome='" + nome + "',tipo='" + tipo + "',quantidade='" + quantidade + "',preco='"+final+"' WHERE Id='" + Id + "'";
+            string sql = "UPDATE Produto SET nome='" + nome + "',tipo='" + tipo + "',quantidade='" + quantidade + "',preco=@preco WHERE Id='" + Id + "'";
             con.Open();
             SqlCommand cmd = new SqlCommand(sql, con);
-            //cmd.Parameters.Add("@preco", SqlDbType.Decimal).Value = final;
+            cmd.Parameters.Add("@preco", SqlDbType.Decimal).Value = final;
             cmd.ExecuteNonQuery();
             con.Close();
         }
@@ -86,10 +83,24 @@ namespace AppBoteco.Classes
                 tipo = dr["tipo"].ToString();
                 quantidade = (int)dr["quantidade"];
                 preco = (decimal)dr["preco"];
-                
             }
             dr.Close();
             con.Close();
+        }
+
+        public bool RegistroRepetido(string nome, string tipo)
+        {
+            string sql = "SELECT * FROM Produto WHERE nome='" + nome + "' AND tipo='"+tipo+"'";
+            con.Open();
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.ExecuteNonQuery();
+            var result = cmd.ExecuteScalar();
+            if (result != null)
+            {
+                return (int)result > 0;
+            }
+            con.Close();
+            return false;
         }
     }
 }
