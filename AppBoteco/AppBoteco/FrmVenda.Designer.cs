@@ -72,6 +72,7 @@
             this.btnLocalizar.Size = new System.Drawing.Size(71, 65);
             this.btnLocalizar.TabIndex = 0;
             this.btnLocalizar.UseVisualStyleBackColor = false;
+            this.btnLocalizar.Click += new System.EventHandler(this.btnLocalizar_Click);
             // 
             // txtId
             // 
@@ -271,6 +272,7 @@
             this.btnFinalizarPedido.TabIndex = 16;
             this.btnFinalizarPedido.Text = "FINALIZAR PEDIDO";
             this.btnFinalizarPedido.UseVisualStyleBackColor = false;
+            this.btnFinalizarPedido.Click += new System.EventHandler(this.btnFinalizarPedido_Click);
             // 
             // btnAtualizarPedido
             // 
