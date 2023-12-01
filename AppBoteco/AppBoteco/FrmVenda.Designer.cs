@@ -258,6 +258,7 @@
             this.btnFinalizarVenda.TabIndex = 17;
             this.btnFinalizarVenda.Text = "FINALIZAR VENDA";
             this.btnFinalizarVenda.UseVisualStyleBackColor = false;
+            this.btnFinalizarVenda.Click += new System.EventHandler(this.btnFinalizarVenda_Click);
             // 
             // btnFinalizarPedido
             // 
@@ -287,6 +288,7 @@
             this.btnAtualizarPedido.TabIndex = 20;
             this.btnAtualizarPedido.Text = "ATUALIZAR PEDIDO";
             this.btnAtualizarPedido.UseVisualStyleBackColor = false;
+            this.btnAtualizarPedido.Click += new System.EventHandler(this.btnAtualizarPedido_Click);
             // 
             // btnNovoPedido
             // 
